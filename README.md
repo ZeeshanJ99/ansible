@@ -1,13 +1,37 @@
 # Infrastructure as code (Iac)
+Infrastructure as Code (IaC) automates the provisioning of infrastructure, enabling your organization to develop, deploy, and scale cloud applications with greater speed, less risk, and reduced cost.
+
+-----------------------------------------------------------------
+
 ## IAC - configuration management and orchestration
+
+**Configuration management**: Configuration management is the process of tracking and controlling the changes in a software with respect to its requirement, design, function, and development of a product. There are two types of configuration management approaches.
+
+**Orchestration**: Orchestration is the automated configuration, management, and coordination of computer systems, applications, and services. Orchestration helps IT to more easily manage complex tasks and workflows. IT teams must manage many servers and applications, but doing so manually isn’t a scalable strategy.
+
+-----------------------------------------------------------------------------------------
+
 ### Which tools are used for push and pull config
+**Pull Model**: The nodes are dynamically updated with the configurations that are present in the server.
+
+**Push Model**: Centralized server pushes the configurations on the nodes.
+
+----------------------------------------------------------------------------
 
 ## What is Ansible and benefits of it?
 Ansible is a software tool that provides simple but powerful automation for cross-platform computer support. It is intended for IT professionals, who use it for application deployment, updates on workstations and servers, cloud provisioning, configuration management, intra-service orchestration etc.
 
-## why should we use it
+-----------------------------------------------------------------------------------------------
 
-## Create a diagram for ansible on prem, Hybird and public architecture
+## Why should we use it?
+Because it brings huge time savings when we install packages or configure large numbers of servers. Its architecture is simple and effective. It works by connecting to your nodes and pushing small programs to them.
+
+------------------------------------------------------------------------
+
+## Ansible on prem, Hybird and public architecture
+![image](https://user-images.githubusercontent.com/88186084/133142027-9695e725-7491-487b-bb63-7e70555d2bde.png)
+
+--------------------------------------------------------------------------------------------
 
 # Ansible controller and agent nodes set up guide
 ![image](https://user-images.githubusercontent.com/88186084/133131903-d4f81f87-0fe7-45bd-9dbd-82a366d66563.png)
