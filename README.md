@@ -190,7 +190,22 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 
 --------------------------------------------------------------------
 
-## Copy app from controller to web
- 
+### Copy app from controller to web
+
+---------------------------------------------------------------
+
+### create a playbook to install/configure node on the web machine
+
+---------------------------------------------------------------------
+
+### create a playbook to install/configure mongodb in the db machine
+
+-----------------------------------------------------------------------------
+
+### get the nodeapp to work on web up with /posts
+HINT: ansible official documentation available
+- Youtube
+- Stackover flow
+- cofigure nginx reverse prox
 
 
