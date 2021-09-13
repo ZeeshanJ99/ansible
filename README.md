@@ -163,6 +163,8 @@ Ansible playbooks are a completely different way to use ansible than ad-hoc task
 --------------------------------------------
 
 ### Install nginx with an ansible playbook
+![image](https://user-images.githubusercontent.com/88186084/133139977-b4478c0b-cfab-494c-b878-e5b3bb7f52e1.png)
+
 In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this file you can `nano` inside to use these instructions:
       
     # Create a playbook to install nginx web server on web machine
