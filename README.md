@@ -118,7 +118,7 @@ end
 
 ------------------------------------
 
-### ssh into a machine
+### SSH into a machine
 - `ssh vagrant@ip`
 - Enter a password, it will not show on the terminal as it is protected when you write it
 
@@ -147,6 +147,9 @@ Ad-hoc commands in Ansible allow you to execute simple tasks at the command line
     ansible all -a "ls -a"
     ansible db -a "pwd"
     ansible web -a "uname -a"
+
+![image](https://user-images.githubusercontent.com/88186084/133139806-72375b70-ae81-45d2-8e1b-18b8ee797e72.png)
+
 
 ---------------------------------------------------------------------
 
