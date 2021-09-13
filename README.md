@@ -153,6 +153,8 @@ Ad-hoc commands in Ansible allow you to execute simple tasks at the command line
 ## Ansible playbooks
 Ansible playbooks are a completely different way to use ansible than ad-hoc task execution. Ansible playbooks are a .yml files written in YAML (Yet Another Markup Language). Playbooks record and execute Ansible’s configuration, deployment, and orchestration functions. They can describe a policy you want your remote systems to enforce, or a set of steps in a general IT process. NOTE: Indentation is really important in Playbooks.
 
+![image](https://user-images.githubusercontent.com/88186084/133136727-bc541b31-83d6-4204-b2e2-84ea16a0e3bd.png)
+
 - Playbooks start with 3 dashes '---'
 
 --------------------------------------------
@@ -181,7 +183,9 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 - Run playbook: `ansible-playbook nginx_playbook.yml`
 - Check whether it works with the ad-hoc command: `ansible web -a "sudo systemctl status nginx"`
 
+--------------------------------------------------------------------
 
+## Copy app from controller to web
  
 
 
