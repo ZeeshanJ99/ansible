@@ -306,6 +306,7 @@ cd into group_vars
 cd into that
 
 `sudo ansible-vault create pass.yml`
+will ask to create a password,
 
 vim commands notebook
 
@@ -320,7 +321,9 @@ this will show us a encrypted version of the key
 
 ## Hybrid cloud infrastructure
 
+`sudo ansible db -m ping --ask-vault-pass` - redirects command to encrypted key we made. will ask for password pass we made with our , was 1234. 
 
+Like 2 factor authentication ^ - hardening the security using ansible vault
 
 
 
