@@ -326,7 +326,86 @@ this will show us a encrypted version of the key
 Like 2 factor authentication ^ - hardening the security using ansible vault
 
 
+## Launch an EC2 instance on AWS using Ansible playbook
 
+dependencies
+AWS keys
+sre_key.pem file
+sre_key sre_key.pub
+Ansible vault configuration
+we need aws account
+iam role with access to ec2
+
+create a ec2_create.yml in ansible controller:
+
+AMI id - ubuntu 18.04 ami-038d7b856fe7557b3
+type of instance t2 micro 
+
+vpc id - vpc-07e47e9d90d2076da
+
+subnet id - subnet-0429d69d55dfad9d2
+
+security group id - allows you to ssh into the machine
+key_name 
+
+public ip
+
+      # this playbook will launch an Ec2 instnace
+
+      - hosts: localhost
+        connection: local
+        gather_facts: True
+        become: True
+        vars:
+          key_name: sre_key
+          region: eu-west-1
+          image: ami-038d7b856fe7557b3
+          id: "SRE Zeeshan Ansible EC2"
+          sec_group: "sg-041219dc7914e8167"
+          subnet_id: "subnet-0429d69d55dfad9d2"
+# add the following line if ansible by default uses python 2.7
+          ansible_python_interpreter: /usr/bin/python3
+        tasks:
+
+
+          - name: Facts
+            block:
+
+            - name: Get instances facts
+              ec2_instance_facts:
+                aws_access_key: "{{aws_access_key}}"
+                aws_secret_key: "{{aws_secret_key}}"
+              register: result
+
+          - name: Provisioning EC2 instances
+            block:
+
+            - name: Upload public key to AWS
+              ec2_key:
+                name: "{{key_name}}"
+                key_material: "{{ lookup('file', '~/.ssh{{ key_name }}.pub') }}"
+                region: "{{ region }}"
+                aws_access_key: "{{aws_access_key}}"
+                aws_secret_key: "{{aws_secret_key}}"
+
+             - name: Provision instance(s)
+               ec2:
+                 aws_access_key: "{{aws_access_key}}"
+                 aws_secret_key: "{{aws_secret_key}}"
+                 assign_public_ip: true
+                 key_name: "{{ key_name }}"
+                 id: "{{ id }}"
+                 vpc_subnet_id: "{{ subnet_id }}"
+                 group_id: "{{ sec_group }}"
+                 image: "{{ image }}"
+                 instance_type: t2.micro
+                 region: "{{ region }}"
+                 wait: true
+                 count: 1
+                 instance_tags:
+                   Name: sre_zeeshan_ansible_ec2-app
+
+               tags: ['never', 'create_ec2']
 
 
 
