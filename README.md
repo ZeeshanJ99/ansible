@@ -283,31 +283,42 @@ HINT: ansible official documentation available
 ------------------------------------------------------
 
 ## Ansible Vault
-copy installation stuff without -y from teams chat
 
-check installation aws--version
+    sudo apt update -y
+    sudo apt-get install tree -y
+    sudo apt-add-repository --yes --update ppa:ansible/ansible
+    sudo apt install ansible -y
+    sudo apt install python3-pip
+    pip3 install awscli
+    pip3 install boto boto3
+    sudo apt-get upgrade -y
 
-change python to python 3 - alias python=python3
+check installation `aws--version`
 
-go to etc/ansible - sudo mkdir group_vars
+change python to python 3 - `alias python=python3`
+
+go to etc/ansible - `sudo mkdir group_vars`
 
 cd into group_vars
 
-sudo mkdir all
+`sudo mkdir all`
 
 cd into that
 
-sudo ansible-vault create pass.yml
+`sudo ansible-vault create pass.yml`
 
 vim commands notebook
 
-aws_access_key: put in aws access key
-aws_access_key: aws secret key
+`aws_access_key: put in aws access key
+aws_access_key: aws secret key`
 
 exit
 
-sudo cat pass.yml 
+`sudo cat pass.yml` 
 this will show us a encrypted version of the key
+
+
+## Hybrid cloud infrastructure
 
 
 
