@@ -278,6 +278,49 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 HINT: ansible official documentation available
 - Youtube
 - Stackover flow
-- cofigure nginx reverse prox
+- cofigure nginx reverse proxy
+
+------------------------------------------------------
+
+## Ansible Vault
+copy installation stuff without -y from teams chat
+
+check installation aws--version
+
+change python to python 3 - alias python=python3
+
+go to etc/ansible - sudo mkdir group_vars
+
+cd into group_vars
+
+sudo mkdir all
+
+cd into that
+
+sudo ansible-vault create pass.yml
+
+vim commands notebook
+
+aws_access_key: put in aws access key
+aws_access_key: aws secret key
+
+exit
+
+sudo cat pass.yml 
+this will show us a encrypted version of the key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
