@@ -359,12 +359,12 @@ create_ec2.yml:
         gather_facts: True
         become: True
         vars:
-          key_name: sre_key
+          key_name: enter your key name
           region: eu-west-1
-          image: ami-038d7b856fe7557b3
+          image: ami id here
           id: "SRE Zeeshan Ansible EC2"
-          sec_group: "sg-041219dc7914e8167"
-          subnet_id: "subnet-0429d69d55dfad9d2"
+          sec_group: "sg id here"
+          subnet_id: "subnet-id here"
     # add the following line if ansible by default uses python 2.7
           ansible_python_interpreter: /usr/bin/python3
         tasks:
