@@ -350,6 +350,8 @@ key_name
 
 public ip
 
+create_ec2.yml: 
+
       # this playbook will launch an Ec2 instnace
 
       - hosts: localhost
@@ -363,7 +365,7 @@ public ip
           id: "SRE Zeeshan Ansible EC2"
           sec_group: "sg-041219dc7914e8167"
           subnet_id: "subnet-0429d69d55dfad9d2"
-# add the following line if ansible by default uses python 2.7
+    # add the following line if ansible by default uses python 2.7
           ansible_python_interpreter: /usr/bin/python3
         tasks:
 
