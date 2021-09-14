@@ -216,11 +216,57 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 
 --------------------------------------------------------------------
 
-### Copy app from controller to web
-
----------------------------------------------------------------
-
 ### create a playbook to install/configure node on the web machine
+
+`# Create a playbook on the web node to install the app files and set an environmental variable
+# on web `192.168.33.10`
+---
+
+- hosts: web
+  become: true
+
+  tasks:
+  - name: Clone the repository with the app file
+    git:
+     repo: https://github.com/ZeeshanJ99/SRE_cloud_computing
+     dest: /home/vagrant/cloud_computing
+     clone: yes
+     update: yes
+
+  - name: Setting the environmental variable of the DB
+    shell: "echo $DB_HOST"
+    environment:
+      DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
+
+  - name: Echo the environment to make sure its set
+    shell: "echo $DB_HOST"
+
+  - name: Install python-software-properties
+    apt: pkg=software-properties-common state=present
+
+  - name: Add nodejs apt key
+    apt_key:
+      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      state: present
+
+  - name: Add nodejs
+    apt_repository:
+      repo: deb https://deb.nodesource.com/node_13.x bionic main
+      update_cache: yes
+
+  - name: Install nodejs
+    apt: pkg=nodejs state=present
+
+  - name: install nodejs-legacy
+    command: "apt-get install nodejs-legacy"
+
+  - name: Change directory to app and install npm
+    command: "npm install pm2 -g"
+    args:
+      chdir: "/home/vagrant/cloud_computing/app/app"
+
+  - name: Run npm install
+    command: "npm install"
 
 ---------------------------------------------------------------------
 
