@@ -21,6 +21,8 @@ Infrastructure as Code (IaC) automates the provisioning of infrastructure, enabl
 ## What is Ansible and benefits of it?
 Ansible is a software tool that provides simple but powerful automation for cross-platform computer support. It is intended for IT professionals, who use it for application deployment, updates on workstations and servers, cloud provisioning, configuration management, intra-service orchestration etc.
 
+Its heavily used in the industry and cloud independent
+
 -----------------------------------------------------------------------------------------------
 
 ## Why should we use it?
