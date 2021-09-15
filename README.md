@@ -329,6 +329,9 @@ To import another playbook at the end/beginning of a playbook
 ------------------------------------------------------
 
 ## Ansible Vault
+
+<img src = "https://media.giphy.com/media/I7Il0qBnjThAI/giphy-downsized-large.gif?cid=ecf05e47ghqnu66f2bemd0u66aq84ph7w74ngmb3i6awsh6y&rid=giphy-downsized-large.gif&ct=g">
+
 Ansible Vault is an Ansible feature that helps you encrypt confidential information without compromising security. To install ansible on your controller machine use the following to provision ansible and all its dependencies:
 
     sudo apt update -y
