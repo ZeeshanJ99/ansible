@@ -119,7 +119,7 @@ end
 
 ----------------------------------------
 
-## Installing Ansible
+# Installing Ansible
 
 -----------------------------------
 
@@ -188,7 +188,7 @@ Ansible playbooks are a completely different way to use ansible than ad-hoc task
 
 --------------------------------------------
 
-### Install nginx with an ansible playbook
+## Install nginx with an ansible playbook
 ![image](https://user-images.githubusercontent.com/88186084/133139977-b4478c0b-cfab-494c-b878-e5b3bb7f52e1.png)
 
 In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this file you can `nano` inside to use these instructions:
@@ -216,7 +216,7 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 
 --------------------------------------------------------------------
 
-### create a playbook to install/configure node and reverse proxy on the web machine
+## Create a playbook to install/configure node and reverse proxy on the web machine
 This code will create a new playbook. You can use `sudo nano web.yml` or any other suitable name to enter the text editor to paste this in.
       ---
 
@@ -268,7 +268,7 @@ This code will create a new playbook. You can use `sudo nano web.yml` or any oth
 
 ---------------------------------------------------------------------
 
-### create a playbook to install/configure mongodb in the db machine
+## Create a playbook to install/configure mongodb in the db machine
 This code will create a new playbook. You can use `sudo nano db.yml` or any other suitable name to enter the text editor to paste this in.
 
     # Create a playbook to install and configure mongodb on the db machine
