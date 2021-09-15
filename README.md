@@ -217,7 +217,8 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 --------------------------------------------------------------------
 
 ### create a playbook to install/configure node and reverse proxy on the web machine
-    ---
+This code will create a new playbook. You can use `sudo nano web.yml` or any other suitable name to enter the text editor to paste this in.
+      ---
 
     - hosts: web
       become: true
@@ -268,6 +269,7 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 ---------------------------------------------------------------------
 
 ### create a playbook to install/configure mongodb in the db machine
+This code will create a new playbook. You can use `sudo nano db.yml` or any other suitable name to enter the text editor to paste this in.
 
     # Create a playbook to install and configure mongodb on the db machine
     # db 192.168.33.11
