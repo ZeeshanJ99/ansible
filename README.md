@@ -216,73 +216,118 @@ In /etc/ansible create a new **.yml** file called `nginx_playbook.yml`. In this 
 
 --------------------------------------------------------------------
 
-### create a playbook to install/configure node on the web machine
+### create a playbook to install/configure node and reverse proxy on the web machine
+    ---
 
-`# Create a playbook on the web node to install the app files and set an environmental variable
-# on web `192.168.33.10`
----
+    - hosts: web
+      become: true
 
-- hosts: web
-  become: true
+      tasks:
+      - name: Clone the repository with the app file
+        git:
+        repo: https://github.com/ZeeshanJ99/SRE_cloud_computing
+        dest: /home/vagrant/cloud_computing
+        clone: yes
+        update: yes
 
-  tasks:
-  - name: Clone the repository with the app file
-    git:
-     repo: https://github.com/ZeeshanJ99/SRE_cloud_computing
-     dest: /home/vagrant/cloud_computing
-     clone: yes
-     update: yes
+      - name: Setting the environmental variable of the DB
+        shell: "echo $DB_HOST"
+        environment:
+          DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
 
-  - name: Setting the environmental variable of the DB
-    shell: "echo $DB_HOST"
-    environment:
-      DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
+      - name: Echo the environment to make sure its set
+        shell: "echo $DB_HOST"
 
-  - name: Echo the environment to make sure its set
-    shell: "echo $DB_HOST"
+      - name: Install python-software-properties
+        apt: pkg=software-properties-common state=present
 
-  - name: Install python-software-properties
-    apt: pkg=software-properties-common state=present
+      - name: Add nodejs apt key
+        apt_key:
+          url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+          state: present
 
-  - name: Add nodejs apt key
-    apt_key:
-      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-      state: present
+      - name: Add nodejs
+        apt_repository:
+          repo: deb https://deb.nodesource.com/node_13.x bionic main
+          update_cache: yes
 
-  - name: Add nodejs
-    apt_repository:
-      repo: deb https://deb.nodesource.com/node_13.x bionic main
-      update_cache: yes
+      - name: Install nodejs
+        apt: pkg=nodejs state=present
 
-  - name: Install nodejs
-    apt: pkg=nodejs state=present
+      - name: install nodejs-legacy
+        command: "apt-get install nodejs-legacy"
 
-  - name: install nodejs-legacy
-    command: "apt-get install nodejs-legacy"
+      - name: Change directory to app and install npm
+        command: "npm install pm2 -g"
+        args:
+          chdir: "/home/vagrant/cloud_computing/app/app"
 
-  - name: Change directory to app and install npm
-    command: "npm install pm2 -g"
-    args:
-      chdir: "/home/vagrant/cloud_computing/app/app"
-
-  - name: Run npm install
-    command: "npm install"
+      - name: Run npm install
+        command: "npm install"
 
 ---------------------------------------------------------------------
 
 ### create a playbook to install/configure mongodb in the db machine
 
+    # Create a playbook to install and configure mongodb on the db machine
+    # db 192.168.33.11
+    ---
+    - hosts: db
+      gather_facts: yes
+      become: true
+
+      tasks:
+      - name: install mongodb
+        apt: pkg=mongodb state=present
+
+      - name: remove mongod.conf file
+        file:
+          path: /etc/mongod.conf
+          state: absent
+
+      - name: touch file and set permissions
+        file:
+          path: /etc/mongod.conf
+          state: touch
+          mode: u=rw,g=r,o=r
+
+      - name: insert contents for mongod.conf
+        blockinfile:
+          path: /etc/mongod.conf
+          backup: yes
+          block: |
+            "storage:
+              dbPath: /var/lib/mongodb
+              journal:
+                enabled: true
+            systemLog:
+              destination: file
+              logAppend: true
+              path: /var/log/mongodb/mongod.log
+            net:
+              port: 27017
+              bindIp: 0.0.0.0"
 -----------------------------------------------------------------------------
 
-### get the nodeapp to work on web up with /posts
-HINT: ansible official documentation available
-- Youtube
-- Stackover flow
-- cofigure nginx reverse proxy
+## Run the commands to start the app
+In the controller machine, in /etc/ansible folder, run the following:
+
+    ansible-playbook nginx_playbook.yml
+    ansible-playbook mongodb_playbook.yml
+    ansible-playbook node_playbook.yml
+
+Then type the following into your browser: `192.168.33.10`, and then `192.168.33.10/posts`
+
+To import another playbook at the end/beginning of a playbook
+
+    - name: running the next playbook
+      import_playbook: 
+
 
 ------------------------------------------------------
 
 ## Ansible Vault
+Ansible Vault is an Ansible feature that helps you encrypt confidential information without compromising security. To install ansible on your controller machine use the following to provision ansible and all its dependencies:
 
     sudo apt update -y
     sudo apt-get install tree -y
@@ -293,64 +338,51 @@ HINT: ansible official documentation available
     pip3 install boto boto3
     sudo apt-get upgrade -y
 
-check installation `aws--version`
+- check installation by using `aws--version`
 
-change python to python 3 - `alias python=python3`
+- change python to python 3 if python is still 2 - `alias python=python3`
 
-go to etc/ansible - `sudo mkdir group_vars`
+- go to etc/ansible - `sudo mkdir group_vars` then cd into group_vars
 
-cd into group_vars
+- `sudo mkdir all` cd into the all directory
 
-`sudo mkdir all`
+- Use the command `sudo ansible-vault create pass.yml` this will then ask to create a password for the vault which will not show when you type it,
 
-cd into that
+### vim commands
+Once the password is set you will be sent into vim. Here are some vim commands to help you start.
 
-`sudo ansible-vault create pass.yml`
-will ask to create a password,
+- Press `ii` to Insert
+- press `esc : wq` to save and exit 
 
-vim commands notebook
+![image](https://user-images.githubusercontent.com/88186084/133487464-ac8a4695-20ee-425a-a747-3b2599bc0ff9.png)
 
-`aws_access_key: put in aws access key
-aws_access_key: aws secret key`
 
-exit
+
+When in the vim vault paste this:
+
+      aws_access_key: put in aws access key
+      aws_secret_key: aws secret key
+
+and exit
 
 `sudo cat pass.yml` 
-this will show us a encrypted version of the key
+This will show us a encrypted version of the key which will show it has worked, **you should never share your keys anywhere.**
 
-
-## Hybrid cloud infrastructure
-
-`sudo ansible db -m ping --ask-vault-pass` - redirects command to encrypted key we made. will ask for password pass we made with our , was 1234. 
+`sudo ansible db -m ping --ask-vault-pass` - redirects command to encrypted key we made. will ask for password pass we made. 
 
 Like 2 factor authentication ^ - hardening the security using ansible vault
 
+------------------------------------------------------------------------------------------------------------------
+
+## Hybrid cloud infrastructure and Ansible Playbooks
+Ansible playbooks provide another way to use Ansible to automate tasks. Ansible playbooks are `.yaml` or `.yml` files written in Yet Another Markup Language (YAML). They always begin with `---` at the top of the file. 
+
+![image](https://user-images.githubusercontent.com/88186084/133486908-b23f4f1a-f6ef-4de3-9831-bbfc50bcb62c.png)
+
+---------------------------------------------------------------------------------------------------------------
 
 ## Launch an EC2 instance on AWS using Ansible playbook
-
-dependencies
-AWS keys
-sre_key.pem file
-sre_key sre_key.pub
-Ansible vault configuration
-we need aws account
-iam role with access to ec2
-
-create a ec2_create.yml in ansible controller:
-
-AMI id - ubuntu 18.04 ami-038d7b856fe7557b3
-type of instance t2 micro 
-
-vpc id - vpc-07e47e9d90d2076da
-
-subnet id - subnet-0429d69d55dfad9d2
-
-security group id - allows you to ssh into the machine
-key_name 
-
-public ip
-
-create_ec2.yml: 
+within /etc/ansible use `sudo nano create_ec2.yml` and paste the following: 
 
       # this playbook will launch an Ec2 instnace
 
@@ -410,12 +442,16 @@ create_ec2.yml:
                tags: ['never', 'create_ec2']
 
 
+- Save and close
+- Run `sudo ansible-playbook create_ec2.yml --ask-vault-pass --tags create_ec2`
+- Edit `hosts` file in /etc/ansible: paste in the following (and place your instance's IP in)
 
+      [local]
+      localhost ansible_python_interpreter=/usr/local/bin/python3
 
+      [aws]
+      ec2-instance ansible_host=ec2-ip ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/sre_key.pem
 
+- ssh into the machine - if this fails, then add `sudo` to the start of the ssh command, then exit
 
-
-
-
-
-
+- then do `sudo ansible aws -m ping --ask-vault-pass`
