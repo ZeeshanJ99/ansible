@@ -5,9 +5,9 @@ Infrastructure as Code (IaC) automates the provisioning of infrastructure, enabl
 
 ## IAC - configuration management and orchestration
 
-**Configuration management**: Configuration management is the process of tracking and controlling the changes in a software with respect to its requirement, design, function, and development of a product. There are two types of configuration management approaches.
+**Configuration management**: Configuration management is the process of tracking and controlling the changes in a software with respect to its requirement, design, function, and development of a product. There are two types of configuration management approaches. e.g. Ansible
 
-**Orchestration**: Orchestration is the automated configuration, management, and coordination of computer systems, applications, and services. Orchestration helps IT to more easily manage complex tasks and workflows. IT teams must manage many servers and applications, but doing so manually isn’t a scalable strategy.
+**Orchestration**: Orchestration is the automated configuration, management, and coordination of computer systems, applications, and services. Orchestration helps IT to more easily manage complex tasks and workflows. IT teams must manage many servers and applications, but doing so manually isn’t a scalable strategy. - e.g. Terraform
 
 -----------------------------------------------------------------------------------------
 
