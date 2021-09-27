@@ -23,10 +23,10 @@ Ansible is a software tool that provides simple but powerful automation for cros
 
 Its heavily used in the industry and cloud independent
 
------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 ## Why should we use it?
-Because it brings huge time savings when we install packages or configure large numbers of servers. Its architecture is simple and effective. It works by connecting to your nodes and pushing small programs to them.
+Because it brings huge time savings when we install packages or configure large numbers of servers. Its architecture is simple and effective. It works by connecting to your nodes and pushing small programs to them. It is agentless so we have one controller that controls everything
 
 ------------------------------------------------------------------------
 
